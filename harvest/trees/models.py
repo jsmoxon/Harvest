@@ -34,7 +34,7 @@ class Volunteer(models.Model):
     newsletter = models.BooleanField(default=True)
     preferred_days = models.CharField(max_length=100, choices=PREFERRED_DAYS, blank=True, null=True)
     def __unicode__(self):
-        return str(self.first_name)+", "+str(self.last_name)
+        return str(self.first_name)+" "+str(self.last_name)
 
 class YardLocation(models.Model):
     name = models.CharField(max_length=100)

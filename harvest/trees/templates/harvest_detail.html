@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block page %}
+
+<div class="container">
+  <h1>{{harvest.date}} Harvest</h1>
+  <div id="map_canvas" style="width: 500px; height: 300px"></div>
+  <ul>
+    <h6>Leader</h6>
+    <li>{{harvest.leader}}</li>
+    <h6>Volunteers</h6>
+    {% for volunteer in harvest.volunteers.all %}
+    <li>{{volunteer}} -- {{volunteer.phone}} -- {{volunteer.user.email}}</li>
+    {% endfor %}
+    <h6>Trees</h6>
+    {% for tree in harvest.trees.all %}
+    <li><a href="/tree_review/{{tree.id}}/">{{tree}}</a></li>
+    {% endfor%}
+  </ul>
+</div><!--closes container -->
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCxf_ljx73homsazrdtygO9LF2Vpa9GVWE&sensor=false" type="text/javascript"></script>
+<script type="text/javascript">
+
+var lat = 37.8921910;
+var lng = -122.1161540;
+
+var coordinates = new google.maps.LatLng(lat, lng);
+
+function initializeMap() {
+  var myOptions = {
+    zoom:11,
+    center: coordinates,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+  };
+  map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+{% for tree in harvest.trees.all %}
+  var marker{{tree.id}} = new google.maps.Marker({
+    map: map,
+    position: new google.maps.LatLng({{tree.lat}}, {{tree.lng}}),
+    title: '{{tree.type}}',
+    });
+  var infowindow{{tree.id}} = new google.maps.InfoWindow();
+  var content{{tree.id}} = "<ul><li>Type: {{tree.type}}</li><li>Owner: {{tree.owner}}</li><li>Address: {{tree.address}}</li></ul>";
+  google.maps.event.addListener(marker{{tree.id}}, 'mouseover', function() {
+       infowindow{{tree.id}}.setContent(content{{tree.id}});
+       infowindow{{tree.id}}.open(map, this);
+      });
+{% endfor %}
+}
+
+</script>
+
+
+{% endblock page %}

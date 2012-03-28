@@ -9,9 +9,26 @@ def home(request):
     trees = Tree.objects.all()
     return render_to_response("home.html", {'volunteers':volunteers, 'trees':trees}, context_instance=RequestContext(request))
 
-def tree_view(request):
+def tree_list(request):
     trees = Tree.objects.all()
     return render_to_response("trees.html", {'trees':trees}, context_instance=RequestContext(request))
+
+def spotted_tree_list(request):
+    trees = SpottedTree.objects.all()
+    for tree in trees:
+        tree.lat = geo_code(tree.address.address, tree.address.city, tree.address.state, tree.address.zip)[0]
+        tree.lng = geo_code(tree.address.address, tree.address.city, tree.address.state, tree.address.zip)[1]
+        tree.save()
+    return render_to_response("spotted_trees.html", {'trees':trees}, context_instance=RequestContext(request))
+    
+def harvest_detail(request, entry_id):
+    harvest = get_object_or_404(Harvest, pk=entry_id)
+    return render_to_response("harvest_detail.html", {'harvest':harvest}, context_instance=RequestContext(request))
+
+def planned_harvests(request):
+    harvests = Harvest.objects.all()
+    return render_to_response("planned_harvests.html", {'harvests':harvests}, context_instance=RequestContext(request))
+    
 
 def review(request, entry_id):
     tree = get_object_or_404(Tree, pk=entry_id)

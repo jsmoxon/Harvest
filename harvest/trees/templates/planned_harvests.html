@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page %}
+
+<div class="container">
+  <h1>Planned Harvests</h1>
+  <ul>
+    {% for harvest in harvests %}
+    <li><a href="/harvest/{{harvest.id}}/">{{harvest}}</a></li>
+    {% endfor %}
+  </ul>
+</div><!--closes container -->
+{% endblock page %}

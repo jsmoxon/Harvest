@@ -5,3 +5,13 @@ body {
 .helptext {
 display:none;
 }
+
+.horizontal li {
+display:inline;
+padding: 10px;}
+
+#footer {
+margin-left:auto;
+margin-right:auto;
+width:900px;
+}
