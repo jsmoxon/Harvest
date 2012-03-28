@@ -30,13 +30,13 @@ for j in jobs:
 
 productions = ("<100 lbs", ">100lbs")
 for p in productions:
-    production = Production():
+    production = Production()
     production.range = p
     production.save()
 
 yard_locations = ("Back Yard", "Front Yard")
 for y in yard_locations:
-    yard = YardLocation():
+    yard = YardLocation()
     yard.name = y
     yard.save()
 
