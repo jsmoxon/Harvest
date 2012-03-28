@@ -81,7 +81,7 @@ def tree_by_owner(request):
                             yard_location=yard_location, height=height, age=age, production=production, sprayed=sprayed,ripen=ripen,
                             refererence=reference, reference_email=reference_email, comments=comments, lat=lat, lng=lng)
             new_tree.save()
-            return redirect("/tree_view/")
+            return redirect("/tree_list/")
     else:
         form = TreeByOwnerForm()
     return render_to_response("tree_by_owner.html", {'form':form}, context_instance=RequestContext(request))
