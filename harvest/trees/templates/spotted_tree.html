@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block page %}
+<div class="container">
+  <h1>Spot a tree?</h1>
+
+  <form action="." method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Register!" />
+  </form>
+</div><!--closes container -->
+{% endblock page %}
+

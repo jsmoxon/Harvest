@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block page %}
+
+<div class="container">
+  <h1>Create a Harvest</h1>
+  <form action="." method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Create!" />
+  </form>
+</div><!--closes container -->
+{% endblock page %}
