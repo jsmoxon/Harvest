@@ -15,7 +15,7 @@ address.zip = "94549"
 address.save()
 
 agencies = ("Monument Crisis Center", "Food Bank")
-for group in angencies:
+for group in agencies:
     agency = Agency()
     agency.name = group
     agency.save()
