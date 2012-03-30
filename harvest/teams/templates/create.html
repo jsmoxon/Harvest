@@ -2,28 +2,13 @@
 {% block page %}
 
 <div class="container">
-  <h1>{{harvest.date}} Harvest</h1>
+  <h1>Create Harvest</h1>
   <div id="map_canvas" style="width: 500px; height: 300px"></div>
-  <ul>
-    <h6>Leader</h6>
-    <li>{{harvest.leader}}</li>
-    <h6>Agency to Receive Food</h6>
-    <li>{{harvest.agency}}</li>
-    <h6>Group Target Size</h6>
-    <li>{{harvest.size}}</li>
-    <h6>Volunteers</h6>
-    {% for volunteer in harvest.volunteers.all %}
-    <li>{{volunteer}} -- {{volunteer.phone}} -- {{volunteer.user.email}}</li>
-    {% endfor %}
-    <h6>Comments</h6>
-    {% for comment in harvest.comment.all %}
-    <li>{{comment.volunteer}} -- {{comment.comment}}</li>
-    {% endfor %}
-    <h6>Trees</h6>
-    {% for tree in harvest.trees.all %}
-    <li><a href="/tree_review/{{tree.id}}/">{{tree}}</a></li>
-    {% endfor%}
-  </ul>
+  <form action="." method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Submit!" />
+  </form>
 </div><!--closes container -->
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCxf_ljx73homsazrdtygO9LF2Vpa9GVWE&sensor=false" type="text/javascript"></script>
 <script type="text/javascript">
@@ -41,7 +26,7 @@ function initializeMap() {
   };
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-{% for tree in harvest.trees.all %}
+{% for tree in ripe_trees.all %}
   var marker{{tree.id}} = new google.maps.Marker({
     map: map,
     position: new google.maps.LatLng({{tree.lat}}, {{tree.lng}}),
@@ -57,6 +42,4 @@ function initializeMap() {
 }
 
 </script>
-
-
 {% endblock page %}

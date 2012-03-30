@@ -36,10 +36,9 @@ def review(request, entry_id):
         form = TreeReviewForm(request.POST)
         if form.is_valid():
             date = form.cleaned_data['date']
-            agency = form.cleaned_data['agency']
             pounds = form.cleaned_data['pounds']
             issues = form.cleaned_data['issues']
-            new_review = PostHarvestTree(date=date, agency=agency, pounds=pounds, issues=issues)
+            new_review = PostHarvestTree(date=date, pounds=pounds, issues=issues)
             new_review.save()
             tree.harvests.add(new_review)
             return redirect("/tree_review/"+entry_id+"/")
@@ -66,7 +65,7 @@ def tree_by_owner(request):
             age = form.cleaned_data['age']
             production = form.cleaned_data['production']
             sprayed = form.cleaned_data['sprayed']
-            ripen = form.cleaned_data['ripen']
+            ripen_month = form.cleaned_data['ripen_month']
             reference = form.cleaned_data['refererence']
             reference_email = form.cleaned_data['reference_email']
             comments = form.cleaned_data['comments']
@@ -78,7 +77,7 @@ def tree_by_owner(request):
             print new_address
             new_address.save()
             new_tree = Tree(type=type, address=new_address, owner=owner, owner_email=owner_email, owner_phone=owner_phone,
-                            yard_location=yard_location, height=height, age=age, production=production, sprayed=sprayed,ripen=ripen,
+                            yard_location=yard_location, height=height, age=age, production=production, sprayed=sprayed,ripen_month=ripen_month,
                             refererence=reference, reference_email=reference_email, comments=comments, lat=lat, lng=lng)
             new_tree.save()
             return redirect("/tree_list/")

@@ -21,7 +21,7 @@ class TreeByOwnerForm(ModelForm):
     zip = forms.CharField()
     class Meta:
         model = Tree
-        exclude = ('harvests', 'spotted', 'address', 'who_will_harvest', 'lat', 'lng')
+        exclude = ('harvests', 'spotted', 'address', 'who_will_harvest', 'lat', 'lng', 'ripe')
 
 class SpottedTreeForm(ModelForm):
     class Meta:

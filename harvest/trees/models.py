@@ -36,6 +36,12 @@ class Volunteer(models.Model):
     def __unicode__(self):
         return str(self.first_name)+" "+str(self.last_name)
 
+class Comment(models.Model):
+    volunteer =models.ForeignKey(Volunteer)
+    comment = models.TextField()
+    def __unicode__(self):
+        return str(self.volunteer)
+
 class YardLocation(models.Model):
     name = models.CharField(max_length=100)
     about = models.TextField(null=True, blank=True)
@@ -55,7 +61,6 @@ class Production(models.Model):
 
 class PostHarvestTree(models.Model):
     date = models.DateField()
-    agency = models.ForeignKey(Agency)
     pounds = models.IntegerField()
     issues = models.TextField(blank=True, null=True)
     def __unicode__(self):
@@ -74,6 +79,22 @@ class WhoWillHarvest(models.Model):
     def __unicode__(self):
         return str(self.name)
 
+MONTHS = (
+    ("January", "January"),
+    ("February", "February"),
+    ("March", "March"),
+    ("April", "April"),
+    ("May", "May"),
+    ("June", "June"),
+    ("July", "July"),
+    ("August", "August"),
+    ("September", "September"),
+    ("October", "October"),
+    ("November", "November"),
+    ("December", "December")
+)
+
+
 class Tree(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True)
     owner = models.CharField(max_length=100, blank=True, null=True)
@@ -88,7 +109,8 @@ class Tree(models.Model):
     age = models.IntegerField(null=True, blank=True)
     production = models.ForeignKey(Production, on_delete=models.SET_NULL, blank=True, null=True)
     sprayed = models.NullBooleanField()
-    ripen = models.CharField(max_length=100, null=True, blank=True)
+    ripen_month = models.CharField(max_length=100, choices=MONTHS, blank=True, null=True)
+    ripe = models.BooleanField()
     refererence = models.CharField(max_length=100, null=True, blank=True)
     reference_email = models.EmailField(max_length=75, null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
@@ -121,7 +143,10 @@ class Harvest(models.Model):
     trees = models.ManyToManyField(Tree)
     date = models.DateField()
     volunteers = models.ManyToManyField(Volunteer)
+    agency = models.ForeignKey(Agency)
     leader = models.CharField(max_length=200)
+    size = models.IntegerField(default=20)
+    comment = models.ManyToManyField(Comment, blank=True, null=True)
     def __unicode__(self):
         return str(self.date)+" "+str(self.leader)
     

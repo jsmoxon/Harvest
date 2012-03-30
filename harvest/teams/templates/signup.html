@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block page %}
+
+<div class="container">
+<h1>Signup</h1>
+{% if harvest.volunteers.all and harvest.volunteers.all > harvest.size %}
+<h4>Sorry, this harvest is full</h4>
+
+{% else %}
+
+<form action="." method="post">
+  {% csrf_token %}
+  {{form}}
+  <input type="submit" value="Sign Up!" />
+</form>
+{% endif %}
+</div><!--closes container-->
+{% endblock page %}
