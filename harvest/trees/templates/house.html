@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page %}
+
+<div class="container">
+  <h1>Register Trees</h1>
+  <form action="." method="post">
+    {% csrf_token %}
+    {{form}}
+    <h6>Trees</h6>
+    {{formset.management_form}}
+    {% for f in formset %}
+    <div class="{% cycle 'formset1' 'formset2'%}">
+      {{f}}
+    </div>
+    {% endfor %}
+    <input type="submit" value="Create!" />
+	</form>
+</div><!--closes container -->
+
+{% endblock page %}
+
+

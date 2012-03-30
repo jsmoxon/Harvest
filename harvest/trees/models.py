@@ -66,18 +66,26 @@ class PostHarvestTree(models.Model):
     def __unicode__(self):
         return str(self.date)+" "+str(self.pounds)+"lbs"
     
-class Address(models.Model):
-    address = models.CharField(max_length=200, blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    state = models.CharField(max_length=100, blank=True, null=True)
-    zip = models.CharField(max_length=100, blank=True, null=True)
-    def __unicode__(self):
-        return str(self.address)+" "+str(self.city)
-
 class WhoWillHarvest(models.Model):
     name = models.CharField(max_length=100)
     def __unicode__(self):
         return str(self.name)
+
+class House(models.Model):
+    owner = models.CharField(max_length=100, blank=True, null=True)
+    owner_email = models.EmailField(max_length=75, blank=True, null=True)
+    owner_phone = models.CharField(max_length=15, blank=True, null=True)
+    who_will_harvest = models.ForeignKey(WhoWillHarvest, null=True, blank=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    zip = models.CharField(max_length=100, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
+    reference = models.CharField(max_length=100, null=True, blank=True)
+    reference_email = models.EmailField(max_length=75, null=True, blank=True)
+    def __unicode__(self):
+        return str(self.owner)+" "+str(self.address)+" "+str(self.city)
 
 MONTHS = (
     ("January", "January"),
@@ -97,13 +105,7 @@ MONTHS = (
 
 class Tree(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True)
-    owner = models.CharField(max_length=100, blank=True, null=True)
-    owner_email = models.EmailField(max_length=75, blank=True, null=True)
-    owner_phone = models.CharField(max_length=15, blank=True, null=True)
-    who_will_harvest = models.ForeignKey(WhoWillHarvest, null=True, blank=True)
-    address = models.ForeignKey(Address, null=True, blank=True)
-    lat = models.FloatField(blank=True, null=True)
-    lng = models.FloatField(blank=True, null=True)
+    house = models.ForeignKey(House, on_delete=models.SET_NULL, null=True, blank=True)
     yard_location = models.ForeignKey(YardLocation, on_delete=models.SET_NULL, blank=True, null=True)
     height = models.IntegerField(null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
@@ -116,21 +118,20 @@ class Tree(models.Model):
     comments = models.TextField(null=True, blank=True)
     harvests = models.ManyToManyField(PostHarvestTree, blank=True, null=True)
     def __unicode__(self):
-        return str(self.type)+" "+str(self.address)
+        return str(self.type)+" "+str(self.house)
 
 class SpottedTree(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True)
-    owner = models.CharField(max_length=100, blank=True, null=True)
-    owner_email = models.EmailField(max_length=75, blank=True, null=True)
-    owner_phone = models.CharField(max_length=15, blank=True, null=True)
-    who_will_harvest = models.ForeignKey(WhoWillHarvest, null=True, blank=True)
-    address = models.ForeignKey(Address)
+    house = models.ForeignKey(House, null=True, blank=True)
+    lat = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
     yard_location = models.ForeignKey(YardLocation, on_delete=models.SET_NULL, blank=True, null=True)
     height = models.IntegerField(null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
     production = models.ForeignKey(Production, on_delete=models.SET_NULL, blank=True, null=True)
     sprayed = models.NullBooleanField()
-    ripen = models.CharField(max_length=100, null=True, blank=True)
+    ripen_month = models.CharField(max_length=100, choices=MONTHS, blank=True, null=True)
+    ripe = models.BooleanField()
     refererence = models.CharField(max_length=100, null=True, blank=True)
     reference_email = models.EmailField(max_length=75, null=True, blank=True)
     comments = models.TextField(null=True, blank=True)

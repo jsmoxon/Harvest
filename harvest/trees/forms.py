@@ -1,6 +1,8 @@
 from django.forms import ModelForm
 from models import *
 from django import forms
+from django.forms.formsets import formset_factory
+from django.forms.models import modelformset_factory
 
 class VolunteerRegForm(ModelForm):
     username = forms.CharField()
@@ -14,14 +16,18 @@ class VolunteerRegForm(ModelForm):
             'referer': forms.CheckboxSelectMultiple(),
         }
 
+class HouseForm(ModelForm):
+    class Meta:
+        model = House
+        exclude = ('lat', 'lng')
+
 class TreeByOwnerForm(ModelForm):
-    address = forms.CharField()
-    city = forms.CharField()
-    state = forms.CharField()
-    zip = forms.CharField()
     class Meta:
         model = Tree
-        exclude = ('harvests', 'spotted', 'address', 'who_will_harvest', 'lat', 'lng', 'ripe')
+        exclude = ('harvests', 'house', 'ripe')
+
+TreeFormSet = formset_factory(TreeByOwnerForm, extra=3)
+
 
 class SpottedTreeForm(ModelForm):
     class Meta:

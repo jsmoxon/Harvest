@@ -5,6 +5,8 @@
 
   <form action="." method="post">
     {% csrf_token %}
+    {{house_form}}
+    <h4>Tree</h4>
     {{form}}
     <input type="submit" value="Register!" />
   </form>

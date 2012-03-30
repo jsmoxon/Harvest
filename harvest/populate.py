@@ -7,7 +7,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from trees.models import *
 
 
-address = Address()
+address = House()
 address.address = "22 Reliez Valley Ct." 
 address.city = "Lafayette"
 address.state = "California"

@@ -7,8 +7,8 @@
   <ul>
     <h4>Stats</h4>
     <li>Type: {{tree.type}}</li>
-    <li>Owner: {{tree.owner}}</li>
-    <li>Address: {{tree.address}}</li>
+    <li>Owner: {{tree.house.owner}}</li>
+    <li>Address: {{tree.house.address}}</li>
 {% for harvest in tree.harvests.all %}
     <li>{{harvest.date}} Harvest:{{harvest.pounds}} lbs</li>
 {% endfor %}
@@ -22,7 +22,7 @@
 </div><!--closes container -->
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCxf_ljx73homsazrdtygO9LF2Vpa9GVWE&sensor=false" type="text/javascript"></script>
 <script type="text/javascript">
-var coordinates = new google.maps.LatLng({{tree.lat}}, {{tree.lng}});
+var coordinates = new google.maps.LatLng({{tree.house.lat}}, {{tree.house.lng}});
 
 function initializeMap() {
   var myOptions = {
@@ -33,7 +33,7 @@ function initializeMap() {
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   var marker = new google.maps.Marker({
     map: map,
-    position: new google.maps.LatLng({{tree.lat}}, {{tree.lng}}),
+    position: new google.maps.LatLng({{tree.house.lat}}, {{tree.house.lng}}),
     title: '{{tree.type}}',
     });
 }

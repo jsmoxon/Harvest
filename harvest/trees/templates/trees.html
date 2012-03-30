@@ -8,6 +8,7 @@
     {% for tree in trees %}
     <li><a href="/tree_review/{{tree.id}}/">{{tree}}</a></li>
     {% endfor %}
+{{tree}}
   </ul>
 </div><!--closes container -->
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCxf_ljx73homsazrdtygO9LF2Vpa9GVWE&sensor=false" type="text/javascript"></script>
@@ -29,11 +30,11 @@ function initializeMap() {
 {% for tree in trees %}
   var marker{{tree.id}} = new google.maps.Marker({
     map: map,
-    position: new google.maps.LatLng({{tree.lat}}, {{tree.lng}}),
+    position: new google.maps.LatLng({{tree.house.lat}}, {{tree.house.lng}}),
     title: '{{tree.type}}',
     });
   var infowindow{{tree.id}} = new google.maps.InfoWindow();
-  var content{{tree.id}} = "<ul><li>Type: {{tree.type}}</li><li>Owner: {{tree.owner}}</li><li>Address: {{tree.address}}</li></ul>";
+  var content{{tree.id}} = "<ul><li>Type: {{tree.type}}</li><li>Owner: {{tree.owner}}</li><li>Address: {{tree.house.address}}</li></ul>";
   google.maps.event.addListener(marker{{tree.id}}, 'mouseover', function() {
        infowindow{{tree.id}}.setContent(content{{tree.id}});
        infowindow{{tree.id}}.open(map, this);

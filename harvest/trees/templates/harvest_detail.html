@@ -44,7 +44,7 @@ function initializeMap() {
 {% for tree in harvest.trees.all %}
   var marker{{tree.id}} = new google.maps.Marker({
     map: map,
-    position: new google.maps.LatLng({{tree.lat}}, {{tree.lng}}),
+    position: new google.maps.LatLng({{tree.house.lat}}, {{tree.house.lng}}),
     title: '{{tree.type}}',
     });
   var infowindow{{tree.id}} = new google.maps.InfoWindow();
