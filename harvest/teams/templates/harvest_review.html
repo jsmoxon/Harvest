@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block page %}
+
+<div class="container">
+
+<h1>{{harvest.date}} Harvest Review</h1>
+
+
+<form action="." method="post">
+  {% csrf_token %}
+<h4>Trees</h4>
+{% for tree in harvest.trees.all %}
+<label>{{tree}}</label>
+<input type="text" id="{{tree.id}}" name="{{tree.id}}" /><p>lbs</p>
+<input type="hidden" value="{{tree.id}}" name="tree_list" />
+{% endfor %}
+
+<h4>Check the volunteers that showed up:</h4>
+{% for volunteer in harvest.volunteers.all %}
+<label>{{volunteer}}</label>
+<input type="checkbox" name="volunteer_list" value="{{volunteer.id}}"/>
+{% endfor %}
+
+<h4>Any issues?</h4>
+<input type="text" name="issues"/>
+
+<input type="submit" value="Submit!"/>
+</form>
+</div><!--closes container-->
+{% endblock page %}

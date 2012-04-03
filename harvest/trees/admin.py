@@ -1,6 +1,7 @@
 from trees.models import *
 from django.contrib import admin
 
+admin.site.register(Comment)
 admin.site.register(Volunteer)
 admin.site.register(Job)
 admin.site.register(Tree)

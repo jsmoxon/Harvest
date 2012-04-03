@@ -22,15 +22,6 @@ def spotted_tree_list(request):
         tree.save()
     return render_to_response("spotted_trees.html", {'trees':trees}, context_instance=RequestContext(request))
     
-def harvest_detail(request, entry_id):
-    harvest = get_object_or_404(Harvest, pk=entry_id)
-    return render_to_response("harvest_detail.html", {'harvest':harvest}, context_instance=RequestContext(request))
-
-def planned_harvests(request):
-    harvests = Harvest.objects.all()
-    return render_to_response("planned_harvests.html", {'harvests':harvests}, context_instance=RequestContext(request))
-    
-
 def review(request, entry_id):
     tree = get_object_or_404(Tree, pk=entry_id)
     if request.method == 'POST':

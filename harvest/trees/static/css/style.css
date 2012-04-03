@@ -27,3 +27,23 @@ display:none;
 .show {
 display:block;
 }
+
+table {
+text-align:center;
+}
+
+td {
+width:200px;
+height:30px;
+}
+
+th {
+font-weight:bold;
+}
+
+#pounds {
+float:right;
+}
+
+
+

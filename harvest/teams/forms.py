@@ -5,9 +5,9 @@ from django import forms
 class CreateHarvestForm(ModelForm):
     class Meta:
         model = Harvest
-        exclude = ('volunteers', 'comment')
+        exclude = ('volunteers', 'comment', 'trees')
         widgets = {
-            'trees': forms.CheckboxSelectMultiple(),
+#            'trees': forms.CheckboxSelectMultiple(),
             }
 
 class HarvestSignupForm(forms.Form):
@@ -16,3 +16,11 @@ class HarvestSignupForm(forms.Form):
     email = forms.EmailField()
     yes= forms.BooleanField()
     comments = forms.CharField(widget=forms.Textarea())
+
+class HarvestReviewForm(ModelForm):
+    class Meta:
+        model = Harvest
+        exclude = ('comment', 'date', 'agency', 'leader', 'size')
+        widgets = {
+            'volunteers': forms.CheckboxSelectMultiple(),                                                                    
+            }
